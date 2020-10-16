@@ -63,6 +63,6 @@ ENV VPN_PSK password
 
 VOLUME ["/etc/ipsec.d"]
 
-EXPOSE 4500/udp 500/udp 1701/udp
+EXPOSE 4500/udp 500/udp
 
 CMD ["/run.sh"]
