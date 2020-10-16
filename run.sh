@@ -59,7 +59,55 @@ conn fb
  ikelifetime=3600s
  keylife=3600s
 EOF
+cat << EOF
+Import the following vpn configuration file to your fritzbox after changing the marked values:
+vpncfg {
+  connections {
+    enabled = yes;
+    editable = no;
+    conn_type = conntype_lan;
+    name = "FritzBox Strongswan VPN";
+    boxuser_id = 0;
+    always_renew = yes;
+    reject_not_encrypted = no;
+    dont_filter_netbios = yes;
+    localip = 0.0.0.0;
+    local_virtualip = 0.0.0.0;
+    remoteip = 0.0.0.0;
+    remote_virtualip = 0.0.0.0;
+    remotehostname = "vpn.domain.org"; //Change this to the domain/ip of your server
+    keepalive_ip = 0.0.0.0;
+    mode = phase1_mode_idp;
+    phase1ss = "all/all/all";
+    keytype = connkeytype_pre_shared;
+    key = "SecretKey!"; //Change this to your preshared secret key(PSK)
+    cert_do_server_auth = no;
+    use_nat_t = yes;
+    use_xauth = no;
+    use_cfgmode = no;
+    phase2localid {
+      ipnet {
+        ipaddr = 192.168.10.0;  //Change these line to the subnet
+        mask = 255.255.255.0;   //of your fritzbox
+      }
+    }
+    phase2remoteid {
+      ipnet {
+        ipaddr = 172.19.0.0;  //Change these lines to the subnet
+        mask = 255.255.255.0; //of your server
+      }
+    }
+    phase2ss = "esp-all-all/ah-none/comp-all/pfs";
+    accesslist = "permit ip any 172.19.0.0 255.255.255.0"; 
+		//This configures which ips are routed over the vpn connection
+		//I changed it so only local ips from the server subnet are routed through the vpn
+  }
+  ike_forward_rules = "udp 0.0.0.0:500 0.0.0.0:500", 
+  "udp 0.0.0.0:4500 0.0.0.0:4500";
+}
+}
 
+EOF
 if [ -f "/etc/ipsec.d/l2tp-secrets" ]; then
 	echo "Overwriting standard /etc/ppp/l2tp-secrets with /etc/ipsec.d/l2tp-secrets"
 	cp -f /etc/ipsec.d/l2tp-secrets /etc/ppp/l2tp-secrets
