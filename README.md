@@ -1,6 +1,6 @@
-# Fritzbox VPN Server with Strongswan on Docker
+# Connect your Fritzbox Lan2Lan to your Server with Strongswan VPN on Docker
 
-Base docker image to run a Strongswan IPsec to allow FritzBox to connect to the network lan2lan.
+This docker image allows you to connect your fritzbox lan directly to your servers lan using an ipsec vpn connection powered by StrongSwan.
 
 ## Usage
 Run the following to start the container:
