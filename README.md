@@ -2,6 +2,8 @@
 
 This docker image allows you to connect your fritzbox lan directly to your servers lan using an ipsec vpn connection powered by StrongSwan.
 
+
+Tested using a FritzBox 7430
 ## Usage
 Run the following to start the container:
 
