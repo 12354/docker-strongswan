@@ -134,10 +134,10 @@ if [ -f "/etc/ipsec.d/xl2tpd.conf" ]; then
 fi
 
 echo "Starting XL2TPD process..."
-mkdir -p /var/run/xl2tpd
-/usr/sbin/xl2tpd -c /etc/xl2tpd/xl2tpd.conf
+#mkdir -p /var/run/xl2tpd
+#/usr/sbin/xl2tpd -c /etc/xl2tpd/xl2tpd.conf
 
 ipsec start --nofork\
-
-while true; do sleep 1000; done
+#Add this line to not stop the container instantly on errors.
+#while true; do sleep 1000; done
 
