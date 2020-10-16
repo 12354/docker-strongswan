@@ -99,7 +99,6 @@ There is one service running: *Strongswan*
 
 The default IPSec configuration supports:
 
-* IKEv2 with EAP Authentication (Though a certificate has to be added for that to work)
 * IKEv1 with PSK
 
 The ports that are exposed for this container to work are:
