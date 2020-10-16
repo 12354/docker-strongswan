@@ -38,7 +38,7 @@ RUN mkdir -p /usr/src/strongswan \
 	&& rm -rf "/usr/src/strongswan*"
 
 # Strongswan Configuration
-ADD ipsec.conf /etc/ipsec.conf
+#ADD ipsec.conf /etc/ipsec.conf
 ADD strongswan.conf /etc/strongswan.conf
 
 # XL2TPD Configuration
