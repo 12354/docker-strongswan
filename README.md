@@ -29,7 +29,15 @@ Search for this line in the output at the top:
 No VPN_PSK set! Generated a random PSK key: NZESSabnC
 ```
 ## FritzBox configuration
-When you run the docker, a vpn config for your fritz box will be displayed in the logs.
+To add the vpn connection to your fritzbox, configure a new lan-lan vpn connection(""Connect your home network with another FRITZ!Box network (LAN-LAN linkup)") to this server.
+It should work without any additional configuration.
+
+
+This uses the **unsafe** aggressive mode.
+
+By setting the environment variable USE_SAFE_VPN to true, a safe vpn config will be generated and a vpn config file for your fritz box will be displayed in the logs.
+
+
 ```
 docker logs <CONTAINER>
 ```
