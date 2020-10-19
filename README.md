@@ -35,7 +35,7 @@ It should work without any additional configuration.
 
 This uses the **unsafe** aggressive mode.
 
-By setting the environment variable USE_SAFE_VPN to true, a safe vpn config will be generated and a vpn config file for your fritz box will be displayed in the logs.
+By setting the environment variable *USE_SAFE_VPN* to true, a safe vpn config without aggressive mode will be generated and a vpn config file for your fritz box will be displayed in the logs.
 
 
 ```
