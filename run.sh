@@ -39,25 +39,53 @@ $VPN_USER : EAP "$VPN_PASSWORD"
 $VPN_USER : XAUTH "$VPN_PASSWORD"
 EOF
 fi
+echo "Generating /etc/strongswan.conf"
+cat > /etc/strongswan.conf << EOF
+# /etc/strongswan.conf - strongSwan configuration file
+# strongswan.conf - strongSwan configuration file
+#
+# Refer to the strongswan.conf(5) manpage for details
 
+charon {
+        load_modular = yes
+        send_vendor_id = yes
+        i_dont_care_about_security_and_use_aggressive_mode_psk=yes
+        plugins {
+                include strongswan.d/charon/*.conf
+                attr {
+                        dns = 8.8.8.8, 8.8.4.4
+                }
+        }
+}
+
+include strongswan.d/*.conf
+
+EOF
 echo "Generating /etc/ipsec.conf"
 cat > /etc/ipsec.conf <<EOF
-
 config setup
 conn %default
- left=%defaultroute
  leftsubnet=$SERVER_SUBNET
  authby=secret
- auto=start
+ auto=add
 
 conn fb
+ left=%any
+ leftid=%any
  ike=aes256-sha-modp1024
  esp=aes256-sha1-modp1024
  right=%any
- rightid=%any
  rightsubnet=$FRITZBOX_SUBNET
  ikelifetime=3600s
  keylife=3600s
+ dpdaction=restart
+ dpdtimeout=60
+ dpddelay=30
+ reauth=yes
+ rekey=yes
+ margintime=9m
+ aggressive=yes
+
 EOF
 cat << EOF
 Import the following vpn configuration file to your fritzbox after changing the marked values:
@@ -137,7 +165,7 @@ echo "Starting XL2TPD process..."
 #mkdir -p /var/run/xl2tpd
 #/usr/sbin/xl2tpd -c /etc/xl2tpd/xl2tpd.conf
 
-ipsec start --nofork\
+#ipsec start --nofork\
 #Add this line to not stop the container instantly on errors.
 #while true; do sleep 1000; done
 
